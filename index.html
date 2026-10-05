@@ -105,3 +105,286 @@
       text-align: center;
       margin-bottom: 20px;
     }
+
+    .title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent-color);
+      letter-spacing: 1px;
+      margin: 0;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .header-age {
+      font-size: 11px;
+      border: 1px solid var(--accent-color);
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: var(--accent-color);
+    }
+
+    .user-welcome {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    .stat-item .val {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .stat-item .lbl {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .contract-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contract-item {
+      background: #14141d;
+      border: 1px solid var(--border-color);
+      padding: 14px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contract-info .name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .contract-info .reward {
+      font-size: 12px;
+      color: var(--accent-color);
+      margin-top: 2px;
+    }
+
+    .action-btn {
+      width: 100%;
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .small-btn {
+      background: transparent;
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: #14141d;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: var(--accent-color);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ЗАСТАВКА ПРИ ВХОДЕ (SPLASH SCREEN) -->
+  <div id="splash-screen">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTYxMzhxNHltNDJ0ZXBhOG0yZmFwMmVqenBrdWp0cHAwOW85Z2E1cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Pact & Passion GIF" class="splash-gif">
+    <h1 class="splash-title">Pact & Passion</h1>
+    <div class="age-badge">🔞 18+ ADULT ONLY</div>
+    <div class="splash-subtitle">Загрузка мира пактов...</div>
+  </div>
+
+  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <div class="header">
+    <h1 class="title">
+      Pact & Passion
+      <span class="header-age">18+</span>
+    </h1>
+    <div class="user-welcome" id="user-greeting">Привет, Игрок!</div>
+  </div>
+
+  <div id="tab-pacts" class="tab-content active">
+    <div class="card">
+      <div class="stats-container">
+        <div class="stat-item">
+          <div class="val" id="points-val">1,250</div>
+          <div class="lbl">Страсть</div>
+        </div>
+        <div class="stat-item">
+          <div class="val" id="contracts-val">2</div>
+          <div class="lbl">Активных Пакта</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight: 600; margin-bottom: 12px;">Текущие пакты</div>
+      <div class="contract-list">
+        <div class="contract-item">
+          <div class="contract-info">
+            <div class="name">Утренний ритуал</div>
+            <div class="reward">+100 Страсти</div>
+          </div>
+          <button class="small-btn" onclick="completeTask(100, this)">Выполнить</button>
+        </div>
+        <div class="contract-item">
+          <div class="contract-info">
+            <div class="name">Ночная исповедь</div>
+            <div class="reward">+250 Страсти</div>
+          </div>
+          <button class="small-btn" onclick="completeTask(250, this)">Выполнить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-leaderboard" class="tab-content">
+    <div class="card">
+      <div style="font-weight: 600; margin-bottom: 12px;">Топ Игроков</div>
+      <div class="contract-list">
+        <div class="contract-item">
+          <div>1. Alex_VIP</div>
+          <div style="color: var(--accent-color); font-weight: bold;">15,400</div>
+        </div>
+        <div class="contract-item">
+          <div>2. Вы</div>
+          <div style="color: var(--accent-color); font-weight: bold;" id="my-rank-val">1,250</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-profile" class="tab-content">
+    <div class="card" style="text-align: center;">
+      <div style="font-size: 40px; margin-bottom: 10px;">🔥</div>
+      <div style="font-size: 18px; font-weight: 700;">Уровень 1: Адепт</div>
+      <div style="margin-top: 15px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 10px;">
+        Контент предназначен строго для лиц старше 18 лет.
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item active" onclick="switchTab('pacts', this)">
+      <div class="nav-icon">📜</div>
+      <div>Пакты</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('leaderboard', this)">
+      <div class="nav-icon">🏆</div>
+      <div>Рейтинг</div>
+    </div>
+    <div class="nav-item" onclick="switchTab('profile', this)">
+      <div class="nav-icon">👤</div>
+      <div>Профиль</div>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      const user = tg.initDataUnsafe.user;
+      document.getElementById('user-greeting').innerText = `Игрок: ${user.first_name}`;
+    }
+
+    // ТАЙМЕР СКРЫТИЯ ЗАСТАВКИ (3 секунды)
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const splash = document.getElementById('splash-screen');
+        splash.classList.add('hidden');
+      }, 3000);
+    });
+
+    let points = 1250;
+
+    function completeTask(reward, btn) {
+      points += reward;
+      document.getElementById('points-val').innerText = points.toLocaleString();
+      btn.innerText = "Готово ✓";
+      btn.disabled = true;
+      btn.style.opacity = "0.5";
+      btn.style.borderColor = "#4ccc54";
+      btn.style.color = "#4ccc54";
+      tg.HapticFeedback.impactOccurred('medium');
+    }
+
+    function switchTab(tabName, el) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      
+      document.getElementById('tab-' + tabName).classList.add('active');
+      el.classList.add('active');
+      tg.HapticFeedback.selectionChanged();
+    }
+  </script>
+</body>
+</html>
