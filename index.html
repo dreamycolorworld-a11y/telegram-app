@@ -40,21 +40,31 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
     #splash-screen.hidden {
       opacity: 0;
       visibility: hidden;
+      pointer-events: none;
     }
 
-    .splash-gif {
-      width: 180px;
-      height: 180px;
-      object-fit: contain;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 30px rgba(255, 42, 95, 0.4);
+    /* АНИМИРОВАННЫЙ НЕОНОВЫЙ ЛОГОТИП */
+    .splash-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      animation: pulse-fire 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulse-fire {
+      0% {
+        transform: scale(0.95);
+        filter: drop-shadow(0 0 10px rgba(255, 42, 95, 0.4));
+      }
+      100% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 25px rgba(255, 42, 95, 0.9));
+      }
     }
 
     .splash-title {
@@ -67,7 +77,6 @@
       text-shadow: 0 0 15px rgba(255, 42, 95, 0.6);
     }
 
-    /* НЕОНОВЫЙ ЗНАК 18+ */
     .age-badge {
       display: inline-block;
       margin-top: 14px;
@@ -79,18 +88,8 @@
       font-size: 14px;
       letter-spacing: 1px;
       background: rgba(255, 42, 95, 0.15);
-      box-shadow: 0 0 12px rgba(255, 42, 95, 0.5), inset 0 0 8px rgba(255, 42, 95, 0.3);
+      box-shadow: 0 0 12px rgba(255, 42, 95, 0.5);
       text-shadow: 0 0 8px #ff2a5f;
-      animation: pulse-glow 2s infinite alternate;
-    }
-
-    @keyframes pulse-glow {
-      0% {
-        box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
-      }
-      100% {
-        box-shadow: 0 0 18px rgba(255, 42, 95, 0.8), inset 0 0 10px rgba(255, 42, 95, 0.5);
-      }
     }
 
     .splash-subtitle {
@@ -187,18 +186,6 @@
       margin-top: 2px;
     }
 
-    .action-btn {
-      width: 100%;
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
     .small-btn {
       background: transparent;
       border: 1px solid var(--accent-color);
@@ -256,7 +243,7 @@
 
   <!-- ЗАСТАВКА ПРИ ВХОДЕ (SPLASH SCREEN) -->
   <div id="splash-screen">
-    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcTYxMzhxNHltNDJ0ZXBhOG0yZmFwMmVqenBrdWp0cHAwOW85Z2E1cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="Pact & Passion GIF" class="splash-gif">
+    <div class="splash-icon">🔥</div>
     <h1 class="splash-title">Pact & Passion</h1>
     <div class="age-badge">🔞 18+ ADULT ONLY</div>
     <div class="splash-subtitle">Загрузка мира пактов...</div>
@@ -349,20 +336,18 @@
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.expand();
-
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      const user = tg.initDataUnsafe.user;
-      document.getElementById('user-greeting').innerText = `Игрок: ${user.first_name}`;
+    if (tg) {
+      tg.expand();
+      if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        document.getElementById('user-greeting').innerText = `Игрок: ${tg.initDataUnsafe.user.first_name}`;
+      }
     }
 
-    // ТАЙМЕР СКРЫТИЯ ЗАСТАВКИ (3 секунды)
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const splash = document.getElementById('splash-screen');
-        splash.classList.add('hidden');
-      }, 3000);
-    });
+    // Гарантированное скрытие заставки через 2.5 секунды
+    setTimeout(() => {
+      const splash = document.getElementById('splash-screen');
+      if (splash) splash.classList.add('hidden');
+    }, 2500);
 
     let points = 1250;
 
@@ -374,7 +359,7 @@
       btn.style.opacity = "0.5";
       btn.style.borderColor = "#4ccc54";
       btn.style.color = "#4ccc54";
-      tg.HapticFeedback.impactOccurred('medium');
+      if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     }
 
     function switchTab(tabName, el) {
@@ -383,7 +368,7 @@
       
       document.getElementById('tab-' + tabName).classList.add('active');
       el.classList.add('active');
-      tg.HapticFeedback.selectionChanged();
+      if (tg && tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
     }
   </script>
 </body>
