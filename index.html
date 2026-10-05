@@ -3,17 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Pact & Passion</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js?v=2"></script>
   <style>
     :root {
-      --bg-color: #0f0f12;
-      --card-bg: #1a1a24;
-      --accent-color: #ff2a5f;
-      --accent-hover: #e02250;
+      --bg-color: #0b0b0e;
+      --card-bg: #161620;
+      --accent-color: #ff0044;
       --text-main: #ffffff;
-      --text-muted: #a0a0b0;
-      --border-color: #2a2a3a;
+      --text-muted: #8e8e9f;
+      --border-color: #262636;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -22,26 +29,20 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
     }
 
     /* ЗАСТАВКА (SPLASH SCREEN) */
     #splash-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: radial-gradient(circle at center, #1a0810 0%, #050507 85%);
+      inset: 0;
+      background: #070709;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s;
-      overflow: hidden;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s;
     }
 
     #splash-screen.hidden {
@@ -50,20 +51,164 @@
       pointer-events: none;
     }
 
-    /* ЭТАП 1: АНИМАЦИЯ ПЕЧАТИ / ШТАМПА 18+ (0 - 4 СЕК) */
-    .stamp-container {
+    /* ЭТАП 1: ЧЁТКИЙ ШТАМП-ПЕЧАТЬ 18+ */
+    .stamp-box {
       position: absolute;
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0;
-      animation: stampLifecycle 4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: stampSequence 3.5s forwards;
     }
 
-    .stamp-wrapper {
-      position: relative;
+    .seal-body {
+      width: 170px;
+      height: 170px;
+      border: 5px solid #ff0044;
+      border-radius: 50%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      transform: scale(3) rotate(-15deg);
-      animation: stampSlam 0.4s cubic-bezier(0.175, 0.885, 0.
+      background: #120006;
+      position: relative;
+      transform: scale(3) rotate(-20deg);
+      opacity: 0;
+      animation: hardSlam 0.25s cubic-bezier(0, 0, 0.2, 1) 0.2s forwards;
+    }
+
+    .seal-inner-ring {
+      position: absolute;
+      inset: 6px;
+      border: 2px dashed #ff0044;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .seal-number {
+      font-size: 58px;
+      font-weight: 900;
+      color: #ff0044;
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+
+    .seal-banner {
+      background: #ff0044;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 12px;
+      margin-top: 4px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transform: rotate(-4deg);
+      border-radius: 2px;
+    }
+
+    /* ВСПЫШКА УДАРА ПЕЧАТИ */
+    .seal-flash {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 6px solid #ff0044;
+      opacity: 0;
+      animation: flashRing 0.4s ease-out 0.45s forwards;
+    }
+
+    @keyframes hardSlam {
+      0% { transform: scale(3) rotate(-25deg); opacity: 0; }
+      100% { transform: scale(1) rotate(-8deg); opacity: 1; }
+    }
+
+    @keyframes flashRing {
+      0% { transform: scale(0.9); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    @keyframes stampSequence {
+      0% { opacity: 1; }
+      80% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.8); visibility: hidden; }
+    }
+
+    /* ЭТАП 2: НАЗВАНИЕ И ПЕЧАТАЮЩИЙСЯ ТЕКСТ */
+    .game-title-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: showTitle 3s ease 3.3s forwards;
+    }
+
+    @keyframes showTitle {
+      0% { opacity: 0; transform: translateY(10px); }
+      15% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .fire-icon {
+      font-size: 60px;
+      margin-bottom: 12px;
+    }
+
+    .typewriter {
+      font-size: 26px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0;
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #ff0044;
+      width: 0;
+      animation: 
+        typeText 1.5s steps(13, end) 3.5s forwards,
+        blinkCursor 0.6s step-end infinite;
+    }
+
+    @keyframes typeText {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blinkCursor {
+      from, to { border-color: transparent; }
+      50% { border-color: #ff0044; }
+    }
+
+    .loading-line-bg {
+      width: 160px;
+      height: 4px;
+      background: #1c1c28;
+      border-radius: 4px;
+      margin-top: 20px;
+      overflow: hidden;
+    }
+
+    .loading-line-fill {
+      width: 0%;
+      height: 100%;
+      background: #ff0044;
+      border-radius: 4px;
+      animation: fillBar 1.5s ease 4.2s forwards;
+    }
+
+    @keyframes fillBar {
+      to { width: 100%; }
+    }
+
+    /* ИНТЕРФЕЙС ИГРЫ */
+    .header { text-align: center; margin-bottom: 20px; }
+    .title {
+      font-size: 24px; font-weight: 800; color: var(--accent-color);
+      letter-spacing: 1px; margin: 0; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .header-age {
+      font-size: 11px; border: 1px solid var(--accent-color);
+      padding: 2px 6px; border-radius: 6px; color: var(--accent-color);
+    }
+    .user-welcome { font-size: 14px; color: var(--text-muted); margin
