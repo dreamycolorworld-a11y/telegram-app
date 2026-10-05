@@ -18,227 +18,90 @@
 
     body {
       margin: 0;
-      padding: 16px;
+      padding: 16px 16px 80px 16px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
     }
 
+    /* ЭКРАН ЗАСТАВКИ (SPLASH SCREEN) */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #08080a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-gif {
+      width: 180px;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 30px rgba(255, 42, 95, 0.4);
+    }
+
+    .splash-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--accent-color);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0;
+      text-shadow: 0 0 15px rgba(255, 42, 95, 0.6);
+    }
+
+    /* НЕОНОВЫЙ ЗНАК 18+ */
+    .age-badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 4px 12px;
+      border: 2px solid var(--accent-color);
+      border-radius: 20px;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 1px;
+      background: rgba(255, 42, 95, 0.15);
+      box-shadow: 0 0 12px rgba(255, 42, 95, 0.5), inset 0 0 8px rgba(255, 42, 95, 0.3);
+      text-shadow: 0 0 8px #ff2a5f;
+      animation: pulse-glow 2s infinite alternate;
+    }
+
+    @keyframes pulse-glow {
+      0% {
+        box-shadow: 0 0 8px rgba(255, 42, 95, 0.4);
+      }
+      100% {
+        box-shadow: 0 0 18px rgba(255, 42, 95, 0.8), inset 0 0 10px rgba(255, 42, 95, 0.5);
+      }
+    }
+
+    .splash-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      letter-spacing: 1px;
+    }
+
+    /* ОСНОВНОЙ ИНТЕРФЕЙС ИГРЫ */
     .header {
       text-align: center;
       margin-bottom: 20px;
     }
-
-    .title {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--accent-color);
-      letter-spacing: 1px;
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    .user-welcome {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-    }
-
-    .stat-item .val {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent-color);
-    }
-
-    .stat-item .lbl {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .progress-bar-container {
-      margin-top: 15px;
-      background: var(--border-color);
-      border-radius: 10px;
-      height: 10px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 45%;
-      height: 100%;
-      background: linear-gradient(90deg, #ff2a5f, #ff6b8b);
-      transition: width 0.3s ease;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .action-btn {
-      width: 100%;
-      background: var(--accent-color);
-      color: white;
-      border: none;
-      padding: 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.1s ease;
-      margin-top: 8px;
-    }
-
-    .action-btn:active {
-      transform: scale(0.98);
-      background: var(--accent-hover);
-    }
-
-    .contract-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .contract-item {
-      background: #14141d;
-      border: 1px solid var(--border-color);
-      padding: 14px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .contract-info .name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .contract-info .reward {
-      font-size: 12px;
-      color: var(--accent-color);
-      margin-top: 2px;
-    }
-
-    .small-btn {
-      background: transparent;
-      border: 1px solid var(--accent-color);
-      color: var(--accent-color);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="header">
-    <h1 class="title">Pact & Passion</h1>
-    <div class="user-welcome" id="user-greeting">Привет, Игрок!</div>
-  </div>
-
-  <div class="card">
-    <div class="stats-container">
-      <div class="stat-item">
-        <div class="val" id="points-val">1,250</div>
-        <div class="lbl">Страсть (Points)</div>
-      </div>
-      <div class="stat-item">
-        <div class="val" id="contracts-val">3</div>
-        <div class="lbl">Активных Пакта</div>
-      </div>
-    </div>
-    <div class="progress-bar-container">
-      <div class="progress-fill" id="level-progress"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="section-title">
-      <span>Текущие контракты</span>
-      <span style="font-size: 12px; color: var(--text-muted);">Уровень 1</span>
-    </div>
-    
-    <div class="contract-list">
-      <div class="contract-item">
-        <div class="contract-info">
-          <div class="name">Дневной ритуал</div>
-          <div class="reward">+100 Страсти</div>
-        </div>
-        <button class="small-btn" onclick="completeTask(100, this)">Выполнить</button>
-      </div>
-
-      <div class="contract-item">
-        <div class="contract-info">
-          <div class="name">Секретное испытание</div>
-          <div class="reward">+250 Страсти</div>
-        </div>
-        <button class="small-btn" onclick="completeTask(250, this)">Выполнить</button>
-      </div>
-    </div>
-  </div>
-
-  <button class="action-btn" onclick="claimDailyReward()">Заключить новый Пакт</button>
-
-  <script>
-    // Инициализация Telegram WebApp API
-    const tg = window.Telegram.WebApp;
-    tg.expand(); // Разворачивает Mini App на весь экран
-
-    // Отображаем имя пользователя из Telegram
-    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-      const user = tg.initDataUnsafe.user;
-      document.getElementById('user-greeting').innerText = `Игрок: ${user.first_name} ${user.last_name || ''}`;
-    }
-
-    let points = 1250;
-
-    function completeTask(reward, btn) {
-      points += reward;
-      document.getElementById('points-val').innerText = points.toLocaleString();
-      btn.innerText = "Готово ✓";
-      btn.disabled = true;
-      btn.style.opacity = "0.5";
-      btn.style.borderColor = "#4ccc54";
-      btn.style.color = "#4ccc54";
-      
-      tg.HapticFeedback.impactOccurred('medium'); // Легкая вибрация при клике в Telegram
-    }
-
-    function claimDailyReward() {
-      points += 500;
-      document.getElementById('points-val').innerText = points.toLocaleString();
-      tg.showAlert("Новый Пакт успешно заключен! Вам начислено +500 Страсти.");
-      tg.HapticFeedback.notificationOccurred('success');
-    }
-  </script>
-</body>
-</html>
