@@ -7,13 +7,19 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: #0f0f12;
-      --card-bg: #1a1a24;
+      --bg-color: #0d0d12;
+      --card-bg: #181822;
       --accent-color: #ff2a5f;
       --accent-hover: #e02250;
       --text-main: #ffffff;
-      --text-muted: #a0a0b0;
-      --border-color: #2a2a3a;
+      --text-muted: #8e8ea0;
+      --border-color: #282838;
+      --stamp-red: #d90429;
+      --stamp-dark-red: #800000;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
@@ -22,25 +28,26 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
-      box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       overflow-x: hidden;
+      min-height: 100vh;
     }
 
-    /* ЭКРАН ЗАСТАВКИ (SPLASH SCREEN) */
+    /* РАСШИРЕННЫЙ ЭКРАН ЗАСТАВКИ (SPLASH SCREEN) */
     #splash-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #08080a;
+      background: radial-gradient(circle at center, #1b0a12 0%, #050508 85%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.8s ease, visibility 0.8s;
+      overflow: hidden;
     }
 
     #splash-screen.hidden {
@@ -49,207 +56,357 @@
       pointer-events: none;
     }
 
-    /* АНИМИРОВАННЫЙ НЕОНОВЫЙ ЛОГОТИП */
-    .splash-icon {
-      font-size: 64px;
-      margin-bottom: 16px;
-      animation: pulse-fire 1.5s infinite alternate ease-in-out;
+    /* ЭТАП 1: РЕАЛИСТИЧНАЯ ПЕЧАТКА 18+ С ЭФФЕКТОМ УДАРА (0 - 4 СЕКУНДЫ) */
+    .step-stamp {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: stampSequence 4s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
     }
 
-    @keyframes pulse-fire {
+    /* Оболочка печати с эффектом вмятины и оттиска */
+    .official-stamp {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 6px double var(--stamp-red);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, rgba(217, 4, 41, 0.15) 0%, rgba(128, 0, 0, 0.3) 100%);
+      box-shadow: 
+        0 0 0 2px var(--stamp-dark-red),
+        inset 0 0 15px rgba(217, 4, 41, 0.5),
+        0 15px 35px rgba(0, 0, 0, 0.8);
+      transform: rotate(-12deg);
+      background-blend-mode: overlay;
+    }
+
+    /* Декоративный внутренний зубчатый штемпель */
+    .stamp-inner-ring {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border: 2px dashed var(--stamp-red);
+      border-radius: 50%;
+      opacity: 0.85;
+    }
+
+    /* Надпись ВОЗРАСТНОГО ОГРАНИЧЕНИЯ внутри печати */
+    .stamp-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--stamp-red);
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 2px var(--stamp-dark-red);
+    }
+
+    .stamp-top-text {
+      font-size: 10px;
+      letter-spacing: 2.5px;
+      margin-bottom: -2px;
+      opacity: 0.9;
+    }
+
+    .stamp-number {
+      font-size: 58px;
+      font-weight: 950;
+      line-height: 1;
+      letter-spacing: -2px;
+      color: var(--stamp-red);
+      filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.6));
+    }
+
+    .stamp-bottom-text {
+      font-size: 9px;
+      letter-spacing: 2px;
+      margin-top: -2px;
+      opacity: 0.9;
+    }
+
+    /* Текстурный слой чернил для эффекта потертости документа */
+    .stamp-grunge {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 50%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(0,0,0,0.15),
+        rgba(0,0,0,0.15) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+
+    /* ЭФФЕКТ УДАРНОЙ ВОЛНЫ И ЧАСТИЦ (RIPPLE EFFECT) */
+    .stamp-ripple {
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      border: 3px solid var(--stamp-red);
+      opacity: 0;
+      pointer-events: none;
+      animation: rippleExpand 0.8s ease-out 0.15s forwards;
+    }
+
+    /* АНИМАЦИЯ ПАДЕНИЯ И ШТАМПОВКИ */
+    @keyframes stampSequence {
       0% {
-        transform: scale(0.95);
-        filter: drop-shadow(0 0 10px rgba(255, 42, 95, 0.4));
+        opacity: 0;
+        transform: scale(3.5) rotate(-35deg);
+        filter: blur(8px);
+      }
+      3% {
+        opacity: 1;
+        transform: scale(1) rotate(-12deg);
+        filter: blur(0px);
+      }
+      6% {
+        transform: scale(1.08) rotate(-10deg);
+      }
+      9% {
+        transform: scale(1) rotate(-12deg);
+      }
+      82% {
+        opacity: 1;
+        transform: scale(1) rotate(-12deg);
       }
       100% {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 25px rgba(255, 42, 95, 0.9));
+        opacity: 0;
+        transform: scale(0.8) rotate(-15deg);
+        filter: blur(4px);
+        visibility: hidden;
       }
     }
 
-    .splash-title {
-      font-size: 28px;
+    @keyframes rippleExpand {
+      0% {
+        transform: scale(1);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(2.2);
+        opacity: 0;
+      }
+    }
+
+    /* ЭТАП 2: НАЗВАНИЕ ИГРЫ И ПЕЧАТАЮЩИЙСЯ ТЕКСТ (С 5.0 СЕКУНДЫ) */
+    /* */
+    .step-game {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: stepGameAnim 4s ease-out 5s forwards;
+    }
+
+    @keyframes stepGameAnim {
+      0% { opacity: 0; transform: translateY(15px); }
+      15% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .pulse-ring {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--accent-color);
+      animation: ring-expand 2s infinite ease-out;
+    }
+
+    @keyframes ring-expand {
+      0% { transform: scale(0.6); opacity: 1; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+
+    .splash-icon {
+      font-size: 65px;
+      z-index: 2;
+      animation: fire-beat 1.8s infinite ease-in-out alternate;
+    }
+
+    @keyframes fire-beat {
+      0% { transform: scale(0.95); filter: drop-shadow(0 0 10px rgba(255, 42, 95, 0.5)); }
+      100% { transform: scale(1.12); filter: drop-shadow(0 0 30px rgba(255, 42, 95, 1)); }
+    }
+
+    /* ТЕКСТ ПЕЧАТНОЙ МАШИНКИ */
+    .typewriter-title {
+      font-size: 26px;
       font-weight: 900;
-      color: var(--accent-color);
+      color: #ffffff;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin: 0;
-      text-shadow: 0 0 15px rgba(255, 42, 95, 0.6);
+      text-shadow: 0 0 20px rgba(255, 42, 95, 0.8);
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid var(--accent-color);
+      width: 0;
+      animation: 
+        typing 1.8s steps(13, end) 5.2s forwards,
+        blink-caret 0.75s step-end infinite 5.2s;
     }
 
-    .age-badge {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 4px 12px;
-      border: 2px solid var(--accent-color);
-      border-radius: 20px;
-      color: #ffffff;
-      font-weight: 800;
-      font-size: 14px;
-      letter-spacing: 1px;
-      background: rgba(255, 42, 95, 0.15);
-      box-shadow: 0 0 12px rgba(255, 42, 95, 0.5);
-      text-shadow: 0 0 8px #ff2a5f;
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: var(--accent-color); }
     }
 
     .splash-subtitle {
       font-size: 12px;
       color: var(--text-muted);
-      margin-top: 12px;
-      letter-spacing: 1px;
+      margin-top: 14px;
+      letter-spacing: 1.5px;
+      opacity: 0;
+      animation: fadeInSub 1s ease 6.6s forwards;
     }
 
-    /* ОСНОВНОЙ ИНТЕРФЕЙС ИГРЫ */
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
+    @keyframes fadeInSub {
+      to { opacity: 1; }
     }
 
+    .progress-container {
+      width: 180px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-top: 16px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff2a5f, #ff7597);
+      box-shadow: 0 0 10px #ff2a5f;
+      border-radius: 4px;
+      animation: fillProgress 2s cubic-bezier(0.1, 0.5, 0.3, 1) 6.8s forwards;
+    }
+
+    @keyframes fillProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* ОСНОВНОЙ ИНТЕРФЕЙС */
+    /* */
+    .header { text-align: center; margin-bottom: 20px; }
     .title {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--accent-color);
-      letter-spacing: 1px;
-      margin: 0;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      font-size: 24px; font-weight: 800; color: var(--accent-color);
+      letter-spacing: 1px; margin: 0; text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
     }
-
     .header-age {
-      font-size: 11px;
-      border: 1px solid var(--accent-color);
-      padding: 2px 6px;
-      border-radius: 6px;
-      color: var(--accent-color);
+      font-size: 11px; border: 1px solid var(--accent-color);
+      padding: 2px 6px; border-radius: 6px; color: var(--accent-color);
     }
-
-    .user-welcome {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
+    .user-welcome { font-size: 14px; color: var(--text-muted); margin-top: 6px; }
 
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 20px; margin-bottom: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
 
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-    }
+    .stats-container { display: flex; justify-content: space-around; text-align: center; }
+    .stat-item .val { font-size: 22px; font-weight: 700; color: var(--accent-color); }
+    .stat-item .lbl { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
 
-    .stat-item .val {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--accent-color);
-    }
-
-    .stat-item .lbl {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .contract-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    .contract-list { display: flex; flex-direction: column; gap: 10px; }
     .contract-item {
-      background: #14141d;
-      border: 1px solid var(--border-color);
-      padding: 14px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      background: #12121a; border: 1px solid var(--border-color);
+      padding: 14px; border-radius: 10px; display: flex;
+      justify-content: space-between; align-items: center;
     }
-
-    .contract-info .name {
-      font-size: 14px;
-      font-weight: 600;
-    }
-
-    .contract-info .reward {
-      font-size: 12px;
-      color: var(--accent-color);
-      margin-top: 2px;
-    }
+    .contract-info .name { font-size: 14px; font-weight: 600; }
+    .contract-info .reward { font-size: 12px; color: var(--accent-color); margin-top: 2px; }
 
     .small-btn {
-      background: transparent;
-      border: 1px solid var(--accent-color);
-      color: var(--accent-color);
-      padding: 6px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
+      background: transparent; border: 1px solid var(--accent-color);
+      color: var(--accent-color); padding: 6px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      transition: all 0.2s ease;
     }
 
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
     .nav-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background: #14141d;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      z-index: 100;
+      position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
+      background: #12121a; border-top: 1px solid var(--border-color);
+      display: flex; justify-content: space-around; align-items: center; z-index: 100;
     }
-
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--text-muted);
-      font-size: 11px;
-      text-decoration: none;
-      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center;
+      color: var(--text-muted); font-size: 11px; text-decoration: none; cursor: pointer;
     }
-
-    .nav-item.active {
-      color: var(--accent-color);
-    }
-
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 3px;
-    }
+    .nav-item.active { color: var(--accent-color); }
+    .nav-icon { font-size: 20px; margin-bottom: 3px; }
   </style>
 </head>
 <body>
 
-  <!-- ЗАСТАВКА ПРИ ВХОДЕ (SPLASH SCREEN) -->
+  <!-- ДВУХЭТАПНЫЙ SPLASH SCREEN С РЕАЛИСТИЧНОЙ ПЕЧАТКОЙ (9 СЕКУНД) -->
   <div id="splash-screen">
-    <div class="splash-icon">🔥</div>
-    <h1 class="splash-title">Pact & Passion</h1>
-    <div class="age-badge">🔞 18+ ADULT ONLY</div>
-    <div class="splash-subtitle">Загрузка мира пактов...</div>
+    
+    <!-- ЭТАП 1: РЕАЛИСТИЧНАЯ ПЕЧАТКА 18+ С ЭФФЕКТОМ УДАРА (0-4 СЕК) -->
+    <div class="step-stamp">
+      <div class="stamp-ripple"></div>
+      <div class="official-stamp">
+        <div class="stamp-inner-ring"></div>
+        <div class="stamp-grunge"></div>
+        <div class="stamp-content">
+          <span class="stamp-top-text">APPROVED</span>
+          <span class="stamp-number">18+</span>
+          <span class="stamp-bottom-text">CONFIDENTIAL</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЭТАП 2: НАЗВАНИЕ ИГРЫ И ЗАГРУЗКА (ПОСЛЕ 1 СЕК ПАУЗЫ: 5-9 СЕК) -->
+    <div class="step-game">
+      <div class="icon-wrapper">
+        <div class="pulse-ring"></div>
+        <div class="splash-icon">🔥</div>
+      </div>
+      <h1 class="typewriter-title">Pact & Passion</h1>
+      <div class="splash-subtitle">Подготовка пактов...</div>
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ -->
+  <!-- ОСНОВНОЙ КОНТЕНТ ИГРЫ -->
   <div class="header">
     <h1 class="title">
       Pact & Passion
@@ -343,11 +500,18 @@
       }
     }
 
-    // Гарантированное скрытие заставки через 2.5 секунды
+    // Виброотклик при «ударе» печатки на 120 мс
+    setTimeout(() => {
+      if (tg && tg.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('heavy');
+      }
+    }, 120);
+
+    // Вся заставка скрывается через 9 секунд
     setTimeout(() => {
       const splash = document.getElementById('splash-screen');
       if (splash) splash.classList.add('hidden');
-    }, 2500);
+    }, 9000);
 
     let points = 1250;
 
