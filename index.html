@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>Pact & Passion</title>
-  <script src="https://telegram.org/js/telegram-web-app.js?v=3"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg-color: #0b0b0e;
+      --bg-color: #070709;
       --card-bg: #161620;
       --accent-color: #ff0044;
       --text-main: #ffffff;
@@ -59,26 +56,23 @@
       text-align: center;
     }
 
-    /* СТИЛИ ДЛЯ ИЗОБРАЖЕНИЯ СИЛУЭТА */
-    .splash-silhouette {
-      width: 130px;
-      height: 130px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      border: 1px solid var(--accent-color);
-      box-shadow: 0 0 20px rgba(255, 0, 68, 0.4);
+    /* ВЕКТОРНЫЙ СИЛУЭТ БЕЗ КРУГА И РАМОК */
+    .silhouette-svg {
+      width: 180px;
+      height: 180px;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 0 18px rgba(255, 0, 68, 0.5));
       animation: pulseSilhouette 2.5s infinite alternate ease-in-out;
     }
 
     @keyframes pulseSilhouette {
       0% {
-        transform: scale(0.96);
-        box-shadow: 0 0 15px rgba(255, 0, 68, 0.3);
+        transform: scale(0.97);
+        filter: drop-shadow(0 0 12px rgba(255, 0, 68, 0.4));
       }
       100% {
-        transform: scale(1.04);
-        box-shadow: 0 0 30px rgba(255, 0, 68, 0.8);
+        transform: scale(1.03);
+        filter: drop-shadow(0 0 28px rgba(255, 0, 68, 0.8));
       }
     }
 
@@ -98,7 +92,7 @@
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
-      border-right: none; /* Убрали рамку-курсор */
+      border-right: none;
       width: 0;
       animation: typeText 2.8s steps(13, end) 0.3s forwards;
     }
@@ -204,7 +198,12 @@
   <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="contract-stage">
-      <img src="silhouette.png" class="splash-silhouette" alt="Pact and Passion">
+      <!-- ЧИСТЫЙ СИЛУЭТ (SVG) БЕЗ КРУГОВОЙ РАМКИ -->
+      <svg class="silhouette-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M65 185C65 155 78 135 90 120C82 110 70 85 85 58C96 38 120 40 125 52C130 40 150 42 155 60C162 82 150 110 142 120C155 135 168 155 168 185H65Z" fill="#000000"/>
+        <path d="M50 185C50 150 68 128 82 112C72 98 62 70 76 42C88 18 116 22 122 36C128 20 156 22 165 48C175 75 162 102 152 112C166 128 184 150 184 185H50Z" fill="#ff0044" opacity="0.15"/>
+        <path d="M82 185C82 158 92 138 102 122C94 112 84 88 98 62C108 44 128 46 132 58C138 46 156 48 160 66C168 88 156 112 148 122C158 138 168 158 168 185H82Z" fill="#110307"/>
+      </svg>
       
       <div class="typewriter-container">
         <h1 class="typewriter">Pact & Passion</h1>
@@ -303,15 +302,16 @@
   </div>
 
   <script>
-    const tg = window.Telegram.WebApp;
+    const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) {
+      tg.ready();
       tg.expand();
       if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        document.getElementById('user-greeting').innerText = `Игрок: ${tg.initDataUnsafe.user.first_name}`;
+        document.getElementById('user-greeting').innerText = `Привет, ${tg.initDataUnsafe.user.first_name}!`;
       }
     }
 
-    // Легкий виброотклик после завершения печати (3.1 сек)
+    // Легкий виброотклик
     setTimeout(() => {
       if (tg && tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('light');
