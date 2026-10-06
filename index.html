@@ -43,36 +43,38 @@
       align-items: center;
       padding-bottom: 70px;
       transition: opacity 0.8s ease, visibility 0.8s;
-      background-color: #000000;
+      /* Цвет фона, совпадающий с тоном краёв исходной картинки */
+      background-color: #5d0309;
       overflow: hidden;
     }
 
-    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ (ОРИГИНАЛЬНЫЕ ЦВЕТА ФОТО, БЕЗ ЗАТЕМНЕНИЯ КАРТИНКИ) */
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ (С ЕСТЕСТВЕННЫМ ПЛАВНЫМ ПЕРЕХОДОМ В КРАСНЫЙ ФОН) */
     .splash-bg {
       position: absolute;
       inset: 0;
+      background-color: #5d0309;
       background-image: url('https://raw.githubusercontent.com/kiriltaha80-boop/telegram-app/main/IMG_0407.png');
       background-size: 168% auto;
       background-position: center 35%;
       background-repeat: no-repeat;
       z-index: 1;
-      filter: none; /* Естественные базовые цвета исходного фото */
+      filter: none; /* Оригинальные цвета фото */
     }
 
-    /* МЯГКАЯ ВИНЬЕТКА ПО КРАЯМ И В УГЛАХ */
+    /* МЯГКАЯ ВИНЬЕТКА ПО КРАЯМ В ТОН КАРТИНКИ */
     .splash-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 50%, rgba(7, 7, 9, 0.45) 80%, rgba(7, 7, 9, 0.85) 100%);
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(93, 3, 9, 0.4) 75%, rgba(50, 2, 6, 0.85) 100%);
       z-index: 2;
       pointer-events: none;
     }
 
-    /* МЯГКОЕ ЗАТЕМНЕНИЕ ТОЛЬКО ВНИЗУ ПОД ТЕКСТОМ */
+    /* МЯГКИЙ ГРАДИЕНТ ПОД ТЕКСТОМ ВНИЗУ */
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(7, 7, 9, 0.7) 85%, rgba(7, 7, 9, 0.95) 100%);
+      background: linear-gradient(to bottom, transparent 60%, rgba(30, 1, 4, 0.6) 85%, rgba(10, 0, 2, 0.95) 100%);
       z-index: 3;
       pointer-events: none;
     }
