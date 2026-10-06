@@ -59,18 +59,30 @@
       text-align: center;
     }
 
-    .fire-icon {
-      font-size: 50px;
-      margin-bottom: 16px;
-      animation: pulseFire 2s infinite alternate ease-in-out;
+    /* СТИЛИ ДЛЯ ИЗОБРАЖЕНИЯ СИЛУЭТА */
+    .splash-silhouette {
+      width: 130px;
+      height: 130px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 0 20px rgba(255, 0, 68, 0.4);
+      animation: pulseSilhouette 2.5s infinite alternate ease-in-out;
     }
 
-    @keyframes pulseFire {
-      0% { transform: scale(0.95); opacity: 0.7; filter: drop-shadow(0 0 5px rgba(255, 0, 68, 0.3)); }
-      100% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 18px rgba(255, 0, 68, 0.8)); }
+    @keyframes pulseSilhouette {
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 15px rgba(255, 0, 68, 0.3);
+      }
+      100% {
+        transform: scale(1.04);
+        box-shadow: 0 0 30px rgba(255, 0, 68, 0.8);
+      }
     }
 
-    /* УМЕРЕННАЯ ПЕЧАТЬ НАЗВАНИЯ (2.8 СЕКУНДЫ) */
+    /* АНИМАЦИЯ ПЕЧАТИ БЕЗ КУРСOРА */
     .typewriter-container {
       display: inline-block;
       margin-bottom: 12px;
@@ -86,11 +98,9 @@
       display: inline-block;
       white-space: nowrap;
       overflow: hidden;
-      border-right: 3px solid var(--accent-color);
+      border-right: none; /* Убрали рамку-курсор */
       width: 0;
-      animation: 
-        typeText 2.8s steps(13, end) 0.3s forwards,
-        blinkCursor 0.6s step-end infinite;
+      animation: typeText 2.8s steps(13, end) 0.3s forwards;
     }
 
     @keyframes typeText {
@@ -98,12 +108,7 @@
       to { width: 100%; }
     }
 
-    @keyframes blinkCursor {
-      from, to { border-color: transparent; }
-      50% { border-color: var(--accent-color); }
-    }
-
-    /* ПОДЗАГОЛОВОК ПОЯВЛЯЕТСЯ ПОСЛЕ ОКОНЧАНИЯ ПЕЧАТИ */
+    /* ПОДЗАГОЛОВОК */
     .splash-subtitle {
       font-size: 11px;
       color: var(--accent-color);
@@ -199,17 +204,14 @@
   <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="contract-stage">
-      <div class="fire-icon">🔥</div>
+      <img src="silhouette.png" class="splash-silhouette" alt="Pact and Passion">
       
-      <!-- ПЛАВНО ПЕЧАТАЮЩЕЕСЯ НАЗВАНИЕ -->
       <div class="typewriter-container">
         <h1 class="typewriter">Pact & Passion</h1>
       </div>
 
-      <!-- ЭЛЕГАНТНЫЙ ПОДЗАГОЛОВОК -->
       <div class="splash-subtitle">• RESTRICTED 18+ •</div>
 
-      <!-- ИНДИКАТОР ЗАГРУЗКИ -->
       <div class="loading-line-bg">
         <div class="loading-line-fill"></div>
       </div>
@@ -278,7 +280,6 @@
 
   <div id="tab-profile" class="tab-content">
     <div class="card" style="text-align: center;">
-      <div style="font-size: 40px; margin-bottom: 10px;">🔥</div>
       <div style="font-size: 18px; font-weight: 700;">Уровень 1: Адепт</div>
       <div style="margin-top: 15px; font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 10px;">
         Контент предназначен строго для лиц старше 18 лет.
