@@ -218,16 +218,112 @@
       background: #101018; border-top: 1px solid var(--border-color);
       display: flex; justify-content: space-around; align-items: center; z-index: 100;
     }
+     <div class="nav-item" onclick="switchTab('profile', this)">
+     <div class="nav-avatar-wrapper">
+     <img id="nav-avatar-img" class="nav-avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Profile">
+     </div>
+     <div>Профиль</div>
+     </div>
+    
     .nav-item {
       display: flex; flex-direction: column; align-items: center;
       color: var(--text-muted); font-size: 11px; cursor: pointer;
     }
     .nav-item.active { color: var(--accent-color); }
     .nav-icon { font-size: 20px; margin-bottom: 3px; }
+
+  /* ИКОНКА АВАТАРА В НИЖНЕЙ ПАНЕЛИ */
+.nav-avatar-wrapper {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+  overflow: hidden;
+  margin-bottom: 2px;
+  transition: all 0.25s ease;
+}
+.nav-item.active .nav-avatar-wrapper {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px rgba(255, 0, 68, 0.6);
+  transform: scale(1.08);
+}
+.nav-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* МОДАЛЬНОЕ ОКНО ВЫБОРА АВАТАРА */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: auto; }
+.avatar-modal {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+}
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 16px 0;
+}
+.avatar-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+.avatar-option.selected {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 10px rgba(255, 0, 68, 0.8);
+}
+  
+  
+  
+  
+  
+  
+  
+  
   </style>
 </head>
 <body>
+ 
+  <!-- МОДАЛЬНОЕ ОКНО ВЫБОРА АВАТАРА -->
+<div class="modal-backdrop" id="avatar-modal">
+  <div class="avatar-modal">
+    <div style="font-size: 18px; font-weight: 800;">Выберите аватар</div>
+    <div class="avatar-grid">
+      <img class="avatar-option selected" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" onclick="selectAvatar(this)">
+      <img class="avatar-option" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80" onclick="selectAvatar(this)">
+      <img class="avatar-option" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&q=80" onclick="selectAvatar(this)">
+    </div>
+    <button class="small-btn" style="width: 100%; padding: 10px;" onclick="closeAvatarModal()">Сохранить</button>
+  </div>
+</div>
 
+  
+  
   <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="splash-bg"></div>
@@ -330,6 +426,22 @@
   </div>
 
   <script>
+  
+    function openAvatarModal() {
+  document.getElementById('avatar-modal').classList.add('open');
+}
+
+function closeAvatarModal() {
+  document.getElementById('avatar-modal').classList.remove('open');
+}
+
+function selectAvatar(imgEl) {
+  document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
+  imgEl.classList.add('selected');
+  document.getElementById('nav-avatar-img').src = imgEl.src;
+}
+    
+    
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) {
       try {
