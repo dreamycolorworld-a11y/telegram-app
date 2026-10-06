@@ -41,13 +41,13 @@
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      padding-bottom: 70px;
+      padding-bottom: 110px; /* Подняли блок с текстом выше */
       transition: opacity 0.8s ease, visibility 0.8s;
       background-color: #5d0309;
       overflow: hidden;
     }
 
-    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С ПЛАВНЫМ РАСТВОРЕНИЕМ НИЗА */
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С ГЛУБОКИМ И ШИРОКИМ РАСТВОРЕНИЕМ НИЗА */
     .splash-bg {
       position: absolute;
       inset: 0;
@@ -58,34 +58,33 @@
       background-repeat: no-repeat;
       z-index: 1;
       filter: none;
-      /* Плавный переход в прозрачность внизу изображения */
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 92%);
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 92%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 85%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 85%);
     }
 
-    /* ДОПОЛНИТЕЛЬНЫЙ МЯГКИЙ РАЗМЫВАЮЩИЙ ГРАДИЕНТ ВНИЗУ НИЗА ПЕРСОНАЖЕЙ */
+    /* УСИЛЕННЫЙ ТЕМНО-КРАСНЫЙ ПЕРЕХОДЯЩИЙ СЛОЙ */
     .splash-bottom-fade {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 55%, rgba(93, 3, 9, 0.6) 78%, #5d0309 95%);
+      background: linear-gradient(to bottom, transparent 35%, rgba(93, 3, 9, 0.4) 55%, rgba(93, 3, 9, 0.85) 75%, #5d0309 90%);
       z-index: 2;
       pointer-events: none;
     }
 
-    /* МЯГКАЯ ВИНЬЕТКА ПО САМЫМ КРАЯМ И В УГЛАХ */
+    /* МЯГКАЯ ВИНЬЕТКА ПО КРАЯМ */
     .splash-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 45%, rgba(93, 3, 9, 0.35) 75%, rgba(40, 1, 5, 0.85) 100%);
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(93, 3, 9, 0.35) 70%, rgba(40, 1, 5, 0.85) 100%);
       z-index: 3;
       pointer-events: none;
     }
 
-    /* МЯГКИЙ ГРАДИЕНТ ТОЛЬКО ПОД ТЕКСТОМ */
+    /* МЯГКИЙ ГРАДИЕНТ ПОД ТЕКСТОМ */
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 65%, rgba(20, 0, 3, 0.5) 85%, rgba(7, 7, 9, 0.95) 100%);
+      background: linear-gradient(to bottom, transparent 60%, rgba(20, 0, 3, 0.5) 80%, rgba(7, 7, 9, 0.95) 100%);
       z-index: 4;
       pointer-events: none;
     }
