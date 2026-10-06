@@ -1,8 +1,3 @@
-Вот полностью переписанный файл `index.html`.
-
-В этой версии фоновый цвет экрана загрузки установлен в точности как бордовый оттенок с краев картинки (`#5d0309`), картинка открывается с оригинальной цветопередачей без затемнения лиц, а легкая виньетка сглаживает только самые края и область под текстом:
-
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -52,7 +47,7 @@
       overflow: hidden;
     }
 
-    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С БАЗОВЫМИ ЦВЕТАМИ */
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С ПЛАВНЫМ РАСТВОРЕНИЕМ НИЗА */
     .splash-bg {
       position: absolute;
       inset: 0;
@@ -63,14 +58,26 @@
       background-repeat: no-repeat;
       z-index: 1;
       filter: none;
+      /* Плавный переход в прозрачность внизу изображения */
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 92%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 68%, rgba(0,0,0,0) 92%);
+    }
+
+    /* ДОПОЛНИТЕЛЬНЫЙ МЯГКИЙ РАЗМЫВАЮЩИЙ ГРАДИЕНТ ВНИЗУ НИЗА ПЕРСОНАЖЕЙ */
+    .splash-bottom-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(93, 3, 9, 0.6) 78%, #5d0309 95%);
+      z-index: 2;
+      pointer-events: none;
     }
 
     /* МЯГКАЯ ВИНЬЕТКА ПО САМЫМ КРАЯМ И В УГЛАХ */
     .splash-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 45%, rgba(93, 3, 9, 0.35) 75%, rgba(40, 1, 5, 0.8) 100%);
-      z-index: 2;
+      background: radial-gradient(ellipse at center, transparent 45%, rgba(93, 3, 9, 0.35) 75%, rgba(40, 1, 5, 0.85) 100%);
+      z-index: 3;
       pointer-events: none;
     }
 
@@ -78,14 +85,14 @@
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 65%, rgba(20, 0, 3, 0.6) 85%, rgba(7, 7, 9, 0.95) 100%);
-      z-index: 3;
+      background: linear-gradient(to bottom, transparent 65%, rgba(20, 0, 3, 0.5) 85%, rgba(7, 7, 9, 0.95) 100%);
+      z-index: 4;
       pointer-events: none;
     }
 
     .contract-stage {
       position: relative;
-      z-index: 4;
+      z-index: 5;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -221,6 +228,7 @@
   <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="splash-bg"></div>
+    <div class="splash-bottom-fade"></div>
     <div class="splash-vignette"></div>
     <div class="splash-overlay"></div>
     <div class="contract-stage">
@@ -361,5 +369,3 @@
   </script>
 </body>
 </html>
-
-```
