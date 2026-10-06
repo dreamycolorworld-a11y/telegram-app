@@ -41,13 +41,13 @@
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      padding-bottom: 110px; /* Подняли блок с текстом выше */
+      padding-bottom: 120px; /* Блок подняли выше, чтобы текст заходил на изображение */
       transition: opacity 0.8s ease, visibility 0.8s;
       background-color: #5d0309;
       overflow: hidden;
     }
 
-    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С ГЛУБОКИМ И ШИРОКИМ РАСТВОРЕНИЕМ НИЗА */
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С ПЛАВНЫМ РАСТВОРЕНИЕМ НИЗА */
     .splash-bg {
       position: absolute;
       inset: 0;
@@ -58,11 +58,11 @@
       background-repeat: no-repeat;
       z-index: 1;
       filter: none;
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 85%);
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 85%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 85%);
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 40%, rgba(0,0,0,0.5) 65%, rgba(0,0,0,0) 85%);
     }
 
-    /* УСИЛЕННЫЙ ТЕМНО-КРАСНЫЙ ПЕРЕХОДЯЩИЙ СЛОЙ */
+    /* МЯГКИЙ ПЕРЕХОДЯЩИЙ СЛОЙ ВНИЗУ */
     .splash-bottom-fade {
       position: absolute;
       inset: 0;
@@ -71,7 +71,7 @@
       pointer-events: none;
     }
 
-    /* МЯГКАЯ ВИНЬЕТКА ПО КРАЯМ */
+    /* ВИНЬЕТКА ПО КРАЯМ */
     .splash-vignette {
       position: absolute;
       inset: 0;
@@ -80,7 +80,7 @@
       pointer-events: none;
     }
 
-    /* МЯГКИЙ ГРАДИЕНТ ПОД ТЕКСТОМ */
+    /* ГРАДИЕНТ В САКМОМ НИЗУ ЭКРАНА */
     .splash-overlay {
       position: absolute;
       inset: 0;
@@ -117,7 +117,7 @@
       white-space: nowrap;
       overflow: hidden;
       width: 0;
-      text-shadow: 0 0 15px rgba(255, 0, 68, 0.7);
+      text-shadow: 0 0 15px rgba(255, 0, 68, 0.8), 0 2px 6px rgba(0, 0, 0, 0.9);
       animation: typeText 2.8s steps(13, end) 0.3s forwards;
     }
 
@@ -134,6 +134,7 @@
       opacity: 0;
       font-weight: 700;
       margin-top: 4px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
       animation: fadeInSub 0.8s ease 3.2s forwards;
     }
 
