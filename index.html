@@ -70,7 +70,7 @@
       100% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 18px rgba(255, 0, 68, 0.8)); }
     }
 
-    /* МЕДЛЕННАЯ ПЕЧАТЬ НАЗВАНИЯ (5 СЕКУНД) */
+    /* БЫСТРАЯ ПЕЧАТЬ НАЗВАНИЯ (1.2 СЕКУНДЫ) */
     .typewriter-container {
       display: inline-block;
       margin-bottom: 12px;
@@ -89,7 +89,7 @@
       border-right: 3px solid var(--accent-color);
       width: 0;
       animation: 
-        typeText 5.0s steps(13, end) 0.8s forwards,
+        typeText 1.2s steps(13, end) 0.3s forwards,
         blinkCursor 0.6s step-end infinite;
     }
 
@@ -103,7 +103,7 @@
       50% { border-color: var(--accent-color); }
     }
 
-    /* ПОДЗАГОЛОВОК ПОЯВЛЯЕТСЯ ПОСЛЕ ПЕЧАТИ */
+    /* ПОДЗАГОЛОВОК ПОЯВЛЯЕТСЯ СРАЗУ ПОСЛЕ ПЕЧАТИ */
     .splash-subtitle {
       font-size: 11px;
       color: var(--accent-color);
@@ -112,14 +112,14 @@
       opacity: 0;
       font-weight: 600;
       margin-top: 4px;
-      animation: fadeInSub 1.5s ease 5.5s forwards;
+      animation: fadeInSub 0.8s ease 1.5s forwards;
     }
 
     @keyframes fadeInSub {
       to { opacity: 0.8; }
     }
 
-    /* ПОЛОСА ЗАГРУЗКИ (ЗАПОЛНЯЕТСЯ К 9-й СЕКУНДЕ) */
+    /* ПОЛОСА ЗАГРУЗКИ */
     .loading-line-bg {
       width: 140px;
       height: 3px;
@@ -134,7 +134,7 @@
       height: 100%;
       background: var(--accent-color);
       border-radius: 3px;
-      animation: fillBar 8.5s ease 0.5s forwards;
+      animation: fillBar 8.0s ease 0.3s forwards;
     }
 
     @keyframes fillBar {
@@ -201,7 +201,7 @@
     <div class="contract-stage">
       <div class="fire-icon">🔥</div>
       
-      <!-- МЕДЛЕННО ПЕЧАТАЮЩЕЕСЯ НАЗВАНИЕ -->
+      <!-- БЫСТРО ПЕЧАТАЮЩЕЕСЯ НАЗВАНИЕ -->
       <div class="typewriter-container">
         <h1 class="typewriter">Pact & Passion</h1>
       </div>
@@ -310,14 +310,14 @@
       }
     }
 
-    // Легкий виброотклик после завершения прописи (5.5 сек)
+    // Легкий виброотклик после завершения быстрой прописи (1.5 сек)
     setTimeout(() => {
       if (tg && tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('light');
       }
-    }, 5500);
+    }, 1500);
 
-    // Закрытие заставки строго через 10 секунд
+    // Закрытие заставки через 10 секунд
     setTimeout(() => {
       const splash = document.getElementById('splash-screen');
       if (splash) splash.classList.add('hidden');
