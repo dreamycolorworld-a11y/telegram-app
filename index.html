@@ -70,7 +70,7 @@
       100% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 18px rgba(255, 0, 68, 0.8)); }
     }
 
-    /* БЫСТРАЯ ПЕЧАТЬ НАЗВАНИЯ (1.2 СЕКУНДЫ) */
+    /* УМЕРЕННАЯ ПЕЧАТЬ НАЗВАНИЯ (2.8 СЕКУНДЫ) */
     .typewriter-container {
       display: inline-block;
       margin-bottom: 12px;
@@ -103,7 +103,7 @@
       50% { border-color: var(--accent-color); }
     }
 
-    /* ПОДЗАГОЛОВОК ПОЯВЛЯЕТСЯ СРАЗУ ПОСЛЕ ПЕЧАТИ */
+    /* ПОДЗАГОЛОВОК ПОЯВЛЯЕТСЯ ПОСЛЕ ОКОНЧАНИЯ ПЕЧАТИ */
     .splash-subtitle {
       font-size: 11px;
       color: var(--accent-color);
@@ -134,7 +134,7 @@
       height: 100%;
       background: var(--accent-color);
       border-radius: 3px;
-      animation: fillBar 8.0s ease 0.3s forwards;
+      animation: fillBar 8.5s ease 0.3s forwards;
     }
 
     @keyframes fillBar {
@@ -201,7 +201,7 @@
     <div class="contract-stage">
       <div class="fire-icon">🔥</div>
       
-      <!-- БЫСТРО ПЕЧАТАЮЩЕЕСЯ НАЗВАНИЕ -->
+      <!-- ПЛАВНО ПЕЧАТАЮЩЕЕСЯ НАЗВАНИЕ -->
       <div class="typewriter-container">
         <h1 class="typewriter">Pact & Passion</h1>
       </div>
@@ -310,12 +310,12 @@
       }
     }
 
-    // Легкий виброотклик после завершения быстрой прописи (1.5 сек)
+    // Легкий виброотклик после завершения печати (3.1 сек)
     setTimeout(() => {
       if (tg && tg.HapticFeedback) {
         tg.HapticFeedback.impactOccurred('light');
       }
-    }, 1500);
+    }, 3100);
 
     // Закрытие заставки через 10 секунд
     setTimeout(() => {
