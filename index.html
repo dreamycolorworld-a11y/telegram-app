@@ -32,6 +32,7 @@
       overflow-x: hidden;
     }
 
+    /* ЭКРАН ЗАСТАВКИ */
     #splash-screen {
       position: fixed;
       inset: 0;
@@ -46,31 +47,39 @@
       overflow: hidden;
     }
 
-    /* ФОНОВЫЙ КРАСНЫЙ ГРАДИЕНТ И КАРТИНКА */
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ (ОРИГИНАЛЬНЫЕ ЦВЕТА ФОТО, БЕЗ ЗАТЕМНЕНИЯ КАРТИНКИ) */
     .splash-bg {
       position: absolute;
       inset: 0;
-      background-color: #80000a;
-      background-image: 
-        radial-gradient(circle at center, rgba(128, 0, 10, 0.5) 0%, rgba(80, 0, 5, 0.7) 60%, rgba(20, 0, 3, 0.95) 100%),
-        url('https://raw.githubusercontent.com/kiriltaha80-boop/telegram-app/main/IMG_0407.png');
-      background-size: cover, 168% auto;
-      background-position: center, center 35%;
+      background-image: url('https://raw.githubusercontent.com/kiriltaha80-boop/telegram-app/main/IMG_0407.png');
+      background-size: 168% auto;
+      background-position: center 35%;
       background-repeat: no-repeat;
       z-index: 1;
-      filter: brightness(1.1) contrast(1.15);
+      filter: none; /* Естественные базовые цвета исходного фото */
     }
 
+    /* МЯГКАЯ ВИНЬЕТКА ПО КРАЯМ И В УГЛАХ */
+    .splash-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, rgba(7, 7, 9, 0.45) 80%, rgba(7, 7, 9, 0.85) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* МЯГКОЕ ЗАТЕМНЕНИЕ ТОЛЬКО ВНИЗУ ПОД ТЕКСТОМ */
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 40%, rgba(7,7,9,0.9) 100%);
-      z-index: 2;
+      background: linear-gradient(to bottom, transparent 60%, rgba(7, 7, 9, 0.7) 85%, rgba(7, 7, 9, 0.95) 100%);
+      z-index: 3;
+      pointer-events: none;
     }
 
     .contract-stage {
       position: relative;
-      z-index: 3;
+      z-index: 4;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -148,6 +157,7 @@
       pointer-events: none;
     }
 
+    /* ИНТЕРФЕЙС ИГРЫ */
     .header { text-align: center; margin-bottom: 20px; }
     .title {
       font-size: 24px; font-weight: 800; color: var(--accent-color);
@@ -202,8 +212,10 @@
 </head>
 <body>
 
+  <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="splash-bg"></div>
+    <div class="splash-vignette"></div>
     <div class="splash-overlay"></div>
     <div class="contract-stage">
       <div class="typewriter-container">
@@ -216,6 +228,7 @@
     </div>
   </div>
 
+  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
   <div class="header">
     <h1 class="title">
       Pact & Passion
