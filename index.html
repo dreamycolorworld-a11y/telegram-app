@@ -42,28 +42,29 @@
       align-items: center;
       padding-bottom: 70px;
       transition: opacity 0.8s ease, visibility 0.8s;
-      background-color: #070709;
+      background-color: #000000;
       overflow: hidden;
     }
 
+    /* ФОНОВЫЙ КРАСНЫЙ ГРАДИЕНТ И КАРТИНКА */
     .splash-bg {
       position: absolute;
       inset: 0;
-      background-color: #200002;
+      background-color: #80000a;
       background-image: 
-        radial-gradient(circle at center, rgba(60, 0, 3, 0.7) 0%, rgba(7, 7, 9, 0.99) 85%),
+        radial-gradient(circle at center, rgba(128, 0, 10, 0.5) 0%, rgba(80, 0, 5, 0.7) 60%, rgba(20, 0, 3, 0.95) 100%),
         url('https://raw.githubusercontent.com/kiriltaha80-boop/telegram-app/main/IMG_0407.png');
       background-size: cover, 168% auto;
       background-position: center, center 35%;
       background-repeat: no-repeat;
       z-index: 1;
-      filter: brightness(0.8) contrast(1.3);
+      filter: brightness(1.1) contrast(1.15);
     }
 
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(7,7,9,0.4) 40%, rgba(7,7,9,0.99) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 40%, rgba(7,7,9,0.9) 100%);
       z-index: 2;
     }
 
