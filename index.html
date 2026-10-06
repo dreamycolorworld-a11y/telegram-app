@@ -33,57 +33,56 @@
     #splash-screen {
       position: fixed;
       inset: 0;
-      background: #070709;
+      z-index: 99999;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
-      z-index: 99999;
+      padding-bottom: 70px;
       transition: opacity 0.8s ease, visibility 0.8s;
+      background: #000;
     }
 
-    #splash-screen.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+    /* ФОНОВОЕ ИЗОБРАЖЕНИЕ С СИЛУЭТОМ НА ВЕСЬ ЭКРАН */
+    .splash-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('./IMG_0400.jpeg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      z-index: 1;
+    }
+
+    /* ВИНЬЕТКА И ЗАТЕМНЕНИЕ */
+    .splash-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(7, 7, 9, 0.85) 75%, #070709 100%),
+                  linear-gradient(to bottom, rgba(7,7,9,0.3) 0%, rgba(7,7,9,0.95) 100%);
+      z-index: 2;
     }
 
     .contract-stage {
+      position: relative;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-    }
-
-    /* ВЕКТОРНЫЙ СИЛУЭТ БЕЗ КРУГА И РАМОК */
-    .silhouette-svg {
-      width: 180px;
-      height: 180px;
-      margin-bottom: 24px;
-      filter: drop-shadow(0 0 18px rgba(255, 0, 68, 0.5));
-      animation: pulseSilhouette 2.5s infinite alternate ease-in-out;
-    }
-
-    @keyframes pulseSilhouette {
-      0% {
-        transform: scale(0.97);
-        filter: drop-shadow(0 0 12px rgba(255, 0, 68, 0.4));
-      }
-      100% {
-        transform: scale(1.03);
-        filter: drop-shadow(0 0 28px rgba(255, 0, 68, 0.8));
-      }
+      width: 100%;
+      padding: 0 20px;
     }
 
     /* АНИМАЦИЯ ПЕЧАТИ БЕЗ КУРСOРА */
     .typewriter-container {
       display: inline-block;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .typewriter {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 900;
       color: #ffffff;
       letter-spacing: 3px;
@@ -94,6 +93,7 @@
       overflow: hidden;
       border-right: none;
       width: 0;
+      text-shadow: 0 0 15px rgba(255, 0, 68, 0.7);
       animation: typeText 2.8s steps(13, end) 0.3s forwards;
     }
 
@@ -109,23 +109,24 @@
       letter-spacing: 4px;
       text-transform: uppercase;
       opacity: 0;
-      font-weight: 600;
+      font-weight: 700;
       margin-top: 4px;
       animation: fadeInSub 0.8s ease 3.2s forwards;
     }
 
     @keyframes fadeInSub {
-      to { opacity: 0.8; }
+      to { opacity: 0.9; }
     }
 
     /* ПОЛОСА ЗАГРУЗКИ */
     .loading-line-bg {
-      width: 140px;
+      width: 150px;
       height: 3px;
-      background: #1a1a24;
+      background: rgba(255, 255, 255, 0.15);
       border-radius: 3px;
-      margin-top: 32px;
+      margin-top: 28px;
       overflow: hidden;
+      backdrop-filter: blur(4px);
     }
 
     .loading-line-fill {
@@ -133,11 +134,18 @@
       height: 100%;
       background: var(--accent-color);
       border-radius: 3px;
+      box-shadow: 0 0 10px var(--accent-color);
       animation: fillBar 8.5s ease 0.3s forwards;
     }
 
     @keyframes fillBar {
       to { width: 100%; }
+    }
+
+    #splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
 
     /* ИНТЕРФЕЙС ИГРЫ */
@@ -195,22 +203,15 @@
 </head>
 <body>
 
-  <!-- SPLASH SCREEN -->
+  <!-- SPLASH SCREEN С ВАШИМ ФОНОМ -->
   <div id="splash-screen">
+    <div class="splash-bg"></div>
+    <div class="splash-overlay"></div>
     <div class="contract-stage">
-      <!-- ЧИСТЫЙ СИЛУЭТ (SVG) БЕЗ КРУГОВОЙ РАМКИ -->
-      <svg class="silhouette-svg" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M65 185C65 155 78 135 90 120C82 110 70 85 85 58C96 38 120 40 125 52C130 40 150 42 155 60C162 82 150 110 142 120C155 135 168 155 168 185H65Z" fill="#000000"/>
-        <path d="M50 185C50 150 68 128 82 112C72 98 62 70 76 42C88 18 116 22 122 36C128 20 156 22 165 48C175 75 162 102 152 112C166 128 184 150 184 185H50Z" fill="#ff0044" opacity="0.15"/>
-        <path d="M82 185C82 158 92 138 102 122C94 112 84 88 98 62C108 44 128 46 132 58C138 46 156 48 160 66C168 88 156 112 148 122C158 138 168 158 168 185H82Z" fill="#110307"/>
-      </svg>
-      
       <div class="typewriter-container">
         <h1 class="typewriter">Pact & Passion</h1>
       </div>
-
       <div class="splash-subtitle">• RESTRICTED 18+ •</div>
-
       <div class="loading-line-bg">
         <div class="loading-line-fill"></div>
       </div>
@@ -311,14 +312,10 @@
       }
     }
 
-    // Легкий виброотклик
     setTimeout(() => {
-      if (tg && tg.HapticFeedback) {
-        tg.HapticFeedback.impactOccurred('light');
-      }
+      if (tg && tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     }, 3100);
 
-    // Закрытие заставки через 10 секунд
     setTimeout(() => {
       const splash = document.getElementById('splash-screen');
       if (splash) splash.classList.add('hidden');
