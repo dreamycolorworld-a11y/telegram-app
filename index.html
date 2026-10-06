@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <!-- Принудительный запрет кэширования браузеру Telegram -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  
   <title>Pact & Passion</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
@@ -34,7 +32,6 @@
       overflow-x: hidden;
     }
 
-    /* ЭКРАН ЗАСТАВКИ (SPLASH SCREEN) */
     #splash-screen {
       position: fixed;
       inset: 0;
@@ -49,27 +46,24 @@
       overflow: hidden;
     }
 
-    /* ФОНОВЫЙ ЕДИНЫЙ СЛОЙ (КАРТИНКА ПРИБЛИЖЕНА НА 168% И ЗАТЕМНЕНА) */
     .splash-bg {
       position: absolute;
       inset: 0;
-      background-color: #350003;
+      background-color: #200002;
       background-image: 
-        radial-gradient(circle at center, rgba(80, 0, 5, 0.6) 0%, rgba(7, 7, 9, 0.98) 85%),
+        radial-gradient(circle at center, rgba(60, 0, 3, 0.7) 0%, rgba(7, 7, 9, 0.99) 85%),
         url('https://raw.githubusercontent.com/kiriltaha80-boop/telegram-app/main/IMG_0407.png');
-      /* 168% — крупный план */
       background-size: cover, 168% auto;
       background-position: center, center 35%;
       background-repeat: no-repeat;
       z-index: 1;
-      filter: brightness(0.9) contrast(1.25);
+      filter: brightness(0.8) contrast(1.3);
     }
 
-    /* МЯГКАЯ ТЕНЬ И ВИНЬЕТКА ДЛЯ ТЕКСТА СНИЗУ */
     .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(7,7,9,0.3) 40%, rgba(7,7,9,0.98) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(7,7,9,0.4) 40%, rgba(7,7,9,0.99) 100%);
       z-index: 2;
     }
 
@@ -85,7 +79,6 @@
       padding: 0 20px;
     }
 
-    /* АНИМАЦИЯ ПЕЧАТИ */
     .typewriter-container {
       display: inline-block;
       margin-bottom: 8px;
@@ -111,7 +104,6 @@
       to { width: 100%; }
     }
 
-    /* ПОДЗАГОЛОВОК */
     .splash-subtitle {
       font-size: 11px;
       color: var(--accent-color);
@@ -127,7 +119,6 @@
       to { opacity: 0.9; }
     }
 
-    /* ПОЛОСА ЗАГРУЗКИ */
     .loading-line-bg {
       width: 150px;
       height: 3px;
@@ -156,7 +147,6 @@
       pointer-events: none;
     }
 
-    /* ИНТЕРФЕЙС ИГРЫ */
     .header { text-align: center; margin-bottom: 20px; }
     .title {
       font-size: 24px; font-weight: 800; color: var(--accent-color);
@@ -211,7 +201,6 @@
 </head>
 <body>
 
-  <!-- SPLASH SCREEN -->
   <div id="splash-screen">
     <div class="splash-bg"></div>
     <div class="splash-overlay"></div>
@@ -226,7 +215,6 @@
     </div>
   </div>
 
-  <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
   <div class="header">
     <h1 class="title">
       Pact & Passion
